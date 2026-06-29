@@ -6,23 +6,30 @@ on:
       - main
 
 jobs:
-  helm-check:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        run: docker build -t ecommerce:v1 .
+
+      - name: List Docker Images
+        run: docker images
+
       - name: Install Helm
         uses: azure/setup-helm@v4
-        with:
-          version: latest
 
       - name: Helm Version
         run: helm version
 
-      - name: Lint Helm Chart
+      - name: Helm Lint
         run: helm lint .
 
-      - name: Render Templates
+      - name: Helm Template
         run: helm template ecommerce .
