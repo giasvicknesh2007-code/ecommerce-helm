@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.16.0"
+  pullPolicy: IfNotPresent
+
+config:
+  appName: ecommerce-api
+  environment: development
+  logLevel: debug
+
+secret:
+  databasePassword: "dev-db-password"
+  jwtSecret: "dev-jwt-secret"
+  redisPassword: "dev-redis-password"
